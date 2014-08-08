@@ -1,0 +1,18 @@
+#compdef gcof
+
+typeset -A opt_args
+local curcontext="$curcontext" context state line
+
+_arguments \
+  '1:git branch:->command' \
+  ':files:_files' \
+
+# this will be error if used before normal git completion invoked
+
+case $state in
+  (command)
+    __git_branch_names
+    ;;
+esac
+
+return 0

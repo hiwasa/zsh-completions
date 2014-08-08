@@ -1,0 +1,16 @@
+#compdef gr
+
+typeset -A opt_args
+local curcontext="$curcontext" context state line
+
+_arguments \
+  '1:git dir:_files -/' \
+  ':git command:->command' \
+
+case $state in
+  (command)
+    _git_commands
+    ;;
+esac
+
+return 0

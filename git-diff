@@ -1,0 +1,87 @@
+__git_setup_diff_options () {
+  local diff_types='(-p -u --patch -U --unified --raw --patch-with-raw --stat --numstat --shortstat --dirstat --dirstat-by-file --summary --patch-with-stat --name-only --name-status --cumulative)'
+
+  diff_options=(
+    $diff_types{-p,-u,--patch}'[generate diff in patch format]'
+    $diff_types{-U,--unified=}'[generate diff with given lines of context]: :__git_guard_number lines'
+    $diff_types'--raw[generate default raw diff output]'
+    $diff_types'--patch-with-raw[generate patch but also keep the default raw diff output]'
+    '--patience[generate diffs with patience algorithm]'
+    $diff_types'--stat=-[generate diffstat instead of patch]:: :__git_guard_diff-stat-width'
+    $diff_types'--numstat[generate more machine-friendly diffstat]'
+    $diff_types'--shortstat[generate summary diffstat]'
+    $diff_types'--dirstat=-[generate dirstat by amount of changes]:: :__git_guard_number limit'
+    $diff_types'--dirstat-by-file=-[generate dirstat by number of files]:: :__git_guard_number limit'
+    $diff_types'--summary[generate condensed summary of extended header information]'
+    $diff_types'--patch-with-stat[generate patch and prepend its diffstat]'
+    '-z[use NUL termination on output]'
+    $diff_types'--name-only[show only names of changed files]'
+    $diff_types'--name-status[show only names and status of changed files]'
+    '--submodule=-[select output format for submodule differences]::format:((short\:"show pairs of commit names"
+                                                                            log\:"list commits like git submodule does (default)"))'
+    '(        --no-color --color-words)--color=-[show colored diff]:: :__git_color_whens'
+    '(--color            --color-words)--no-color[turn off colored diff]'
+    '--word-diff=-[show word diff]::mode:((color\:"highlight changed words using color"
+                                          plain\:"wrap deletions and insertions with markers"
+                                          porcelain\:"use special line-based format for scripts"
+                                          none\:"disable word diff"))'
+    '--word-diff-regex=-[specify what constitutes a word]:word regex'
+    '(--color --no-color              )--color-words=-[show colored-word diff]::word regex'
+    '--no-renames[turn off rename detection]'
+    '--check[warn if changes introduce trailing whitespace or space/tab indents]'
+    '--full-index[show full object name of pre- and post-image blob]'
+    '(--full-index)--binary[in addition to --full-index, output binary diffs for git-apply]'
+    '--abbrev=[set minimum SHA1 display-length]: :__git_guard_number length'
+    # TODO: --break-rewrites is undocumented.
+    '(-B --break-rewrites)'{-B-,--break-rewrites=-}'[break complete rewrite changes into pairs of given size]:: :__git_guard_number size'
+    # TODO: --detect-renames is undocumented.
+    '(-M --detect-renames)'{-M-,--detect-renames=-}'[detect renames with given scope]:: :__git_guard_number size'
+    # TODO: --detect-copies is undocumented.
+    '(-C --detect-copies)'{-C-,--detect-copies=-}'[detect copies as well as renames with given scope]:: :__git_guard_number size'
+    # TODO: --irreversible-delete is maybe undocumented.
+    '(-D --irreversible-delete)'{-D-,--irreversible-delete}'[hide document in deleted file]:: :__git_guard_number size'
+    '--find-copies-harder[try harder to find copies]'
+    '-l-[limit number of rename/copy targets to run]: :__git_guard_number'
+    '--diff-filter=-[select certain kinds of files for diff]: :_guard "[ACDMRTUXB*]#" kinds'
+    '-S-[look for differences that contain the given string]:string'
+    '--pickaxe-all[when -S finds a change, show all changes in that changeset]'
+    '--pickaxe-regex[treat argument of -S as regular expression]'
+    '-O-[output patch in the order of glob-pattern lines in given file]: :_files'
+    '-R[do a reverse diff]'
+    '--relative=-[exclude changes outside and output relative to given directory]:: :_directories'
+    '(-a --text)'{-a,--text}'[treat all files as text]'
+    '--ignore-space-at-eol[ignore changes in whitespace at end of line]'
+    '(-b --ignore-space-change -w --ignore-all-space)'{-b,--ignore-space-change}'[ignore changes in amount of white space]'
+    '(-b --ignore-space-change -w --ignore-all-space)'{-w,--ignore-all-space}'[ignore white space when comparing lines]'
+    '--inter-hunk-context=[combine hunks closer than n lines]:n'
+    '--exit-code[report exit code 1 if differences, 0 otherwise]'
+    '(--exit-code)--quiet[disable all output]'
+    '(           --no-ext-diff)--ext-diff[allow external diff helper to be executed]'
+    '(--ext-diff              )--no-ext-diff[disallow external diff helper to be executed]'
+    '--ignore-submodules[ignore changes to submodules]:: :__git_ignore_submodules_whens'
+    '(--no-prefix)--src-prefix=[use given prefix for source]:prefix'
+    '(--no-prefix)--dst-prefix=[use given prefix for destination]:prefix'
+    '(--src-prefix --dst-prefix)--no-prefix[do not show any source or destination prefix]'
+
+    '(-0 -1 -2 -3 --base --ours --theirs -c --cc --no-index)'{-1,--base}'[diff against "base" version]'
+    '(-0 -1 -2 -3 --base --ours --theirs -c --cc --no-index)'{-2,--ours}'[diff against "our branch" version]'
+    '(-0 -1 -2 -3 --base --ours --theirs -c --cc --no-index)'{-3,--theirs}'[diff against "their branch" version]'
+    '(-0 -1 -2 -3 --base --ours --theirs -c --cc --no-index)-0[omit diff output for unmerged entries]'
+    '(-0 -1 -2 -3 --base --ours --theirs -c --cc --no-index)'{-c,--cc}'[compare "our branch", "their branch" and working tree files]'
+    '-q[remain silent even on nonexisting files]'
+
+    # TODO: --cumulative is undocumented.
+    '--cumulative[undocumented]'
+    # TODO: --follow is undocumented.
+    '--follow[undocumented]'
+    # TODO: --textconv is undocumented.
+    '--textconv[undocumented]'
+    # TODO: --no-textconv is undocumented.
+    '--no-textconv[undocumented]'
+    # TODO: -G is undocumented.
+    '-G[undocumented]'
+    # TODO: --output is undocumented.
+    '--output[undocumented]:undocumented')
+}
+
+__git_setup_diff_options
