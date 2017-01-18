@@ -1,0 +1,16 @@
+#compdef ggm
+
+typeset -A opt_args
+local curcontext="$curcontext" context state line
+
+_arguments \
+  '2:git branch:->command' \
+
+case $state in
+  (command)
+    __git_branch_names
+    ;;
+esac
+
+return 0
+
