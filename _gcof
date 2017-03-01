@@ -5,7 +5,7 @@ local curcontext="$curcontext" context state line
 
 _arguments \
   '1:git branch:->command' \
-  ':files:_files' \
+  '*:files:_files' \
 
 # this will be error if used before normal git completion invoked
 
