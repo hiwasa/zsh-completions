@@ -9,6 +9,7 @@ _arguments \
 
 case $state in
   (command)
+    if ! typeset -f _git_commands >/dev/null 2>&1;then _git;fi
     _git_commands
     ;;
 esac
