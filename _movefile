@@ -10,7 +10,12 @@ _arguments \
 
 case $state in
   (reldir)
-    compadd $(_call_program rel find $(dirname $line[1]'/'$line[2]))
+    if [ -z "${line[2]}" ];then
+      dir=$(dirname ${line[1]/$(echo '~')/$HOME}'/'$line[2])
+    else
+      dir="${line[1]}"
+    fi
+    _files $dir
     ;;
 esac
 
