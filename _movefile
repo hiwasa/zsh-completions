@@ -4,6 +4,7 @@ typeset -A opt_args
 local curcontext="$curcontext" context state line
 
 _arguments \
+  '(-)--'{git,copy,symlink,reverse} \
   '1:files:_files' \
   '2:files:->reldir' \
 
