@@ -4,7 +4,7 @@ typeset -A opt_args
 local curcontext="$curcontext" context state line cword
 
 if [ $CURRENT -lt 3 ];then _arguments '1:files:_files -/' && return;fi
-cd ${words[2]/$(echo '~')/$HOME}
+dir=${words[2]/$(echo '~')/$HOME}
 shift words
 CURRENT=$(($CURRENT - 1))
 words[1]=git
